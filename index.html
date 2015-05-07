@@ -1,11 +1,320 @@
-﻿<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
 
-</body>
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>AutoCAD I/0</h1>
+					<P></P>
+					<P></P>
+					<h3>梁晓冬</h3>
+					<P></P>
+					<h3>DevTech中国区经理</h3>
+					<P></P>
+					<h5>开发技术支持部(DevTech)</h5>				 
+				</section>
+
+				<section>
+					<h2>内容</h2>
+					<p>
+						<ul>
+						<li>回顾：AcCoreConsole</li>
+						<li>AutoCAD I/0介绍</li>
+						<li>API概览</li>
+						<li>演示</li>
+					</ul>
+					</p>
+				</section>
+				
+				<section>
+					<h2>回顾AcCoreConsole</h2>
+					<p>
+						<ul>
+							<li>AutoCAD 2013引入</li>
+							<li>控制台 AutoCAD，无头CAD</li>
+							<li>DOS 命令行执行AutoCAD命令</li>
+								<ul>
+								<li>在图纸上运行一段脚本</li>								 
+								<li>快速批处理DWG文件</li>
+								</ul>
+							<li>可加载’DBX’</li>
+							<li>可加载 ‘CRX’ 插件，执行自定义命令</li>
+								<ul>
+								<li>ObjectARX ，.NET ，LISP</li>								 								 
+								</ul>
+							<li><a href="http://through-the-interface.typepad.com/through_the_interface/2012/02/the-autocad-2013-core-console.html">更多阅读</a></li>
+						</ul>
+					</p>
+				</section>
+				
+				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+					<h1>没有安装AutoCAD</h1>					 
+					<h1>怎么办？</h1>				
+				</section>
+				
+				<section>
+					<h2>AutoCAD I/O基本流程</h2>					 
+					<h8>云端AcCoreConsole</h8>				
+					<h8>	云端运行AutoCAD,批处理DWG </h8>		
+					<img width="800" height="500" data-src="images/IOWorkflow.jpg" alt="Down arrow">	
+				</section>
+				
+				<section>
+					<h2>客户群</h2>					 
+					<ul>							
+							<li>不是最终该用户直接使用的</li>
+								<ul>
+								<li>为开发者而诞生</li>								 								 
+								</ul>
+							<li>不能交互式编辑DWG图纸</li>
+								<ul>
+								<li>交互编辑或查看DWG用AutoCAD 360 Web或Mobile</li>								 								 
+							</ul>
+							<li>不是服务器</li>
+								<ul>
+								<li>没有所谓’安装‘</li>								 								 
+							</ul> 
+					</ul>	
+				</section>
+				
+				<section>
+					<h2>接口概览</h2>					 
+					<ul>							
+							<li><a href="http://www.odata.org/">OData</a>协议规范（URL 和 payloads）</li>								 
+							<li>主要术语，3个集合</li>
+								<ul>
+									<li>WorkItem</li>								 								 
+									<li>Activity</li>								 								 
+									<li>AppPackage</li>								 								 
+								</ul>
+							<li>和客户端用什么语言无关，只要能发送 HTTP请求</li>
+								<ul>
+								<li>也有一些封装好的.NET 库 ，便于使用</li>								 								 
+							</ul> 
+					</ul>	
+				</section>
+				
+				<section>
+					<h2>Activity和WorkItem</h2>			
+					<ul>
+						<li>Activity可以理解为一个功能函数</li>
+						<li>WorkItem则是用来调用函数</li>						 
+					</ul>		 
+					<img width="500" height="300" data-src="images/act-like-fun.png" alt="Down arrow">
+					<img width="400" height="300" data-src="images/work-like-fun.png" alt="Down arrow">					 
+				</section>
+				
+				<section>
+					<h2>Activity</h2>			
+					<ul>							
+							<li>定义输入输出参数</li>								 							 
+								<ul>
+									<li>满足 URL 的参数要求</li> 	 								 
+								</ul>
+								<P></P>
+							<li>计划提供Activities库</li>
+								<ul>
+								<li>作为AutoCAD专业库</li>								 								 
+							</ul> 
+							<P></P>
+							<li>Activities可以是公开或私有</li>
+								<ul>
+								<li>可以分享Activities</li>								 								 
+							</ul> 
+					</ul>			 					  
+				</section>
+				
+				<section>
+					<h2>WorkItem</h2>			
+					<ul>							
+							<li>WorkItem需要</li>								 							 
+								<ul>
+									<li>关联某 ‘Activity’</li> 	 								 
+									<li>输入参数 (URLs)</li> 	 								 
+									<li>输出参数 (URLs)</li> 	 								 
+								</ul>
+								<P></P>
+							<li>查看WorkItem状态:</li>
+								<ul>
+								<li>可用状态查询方式</li>								 								 
+								<li>也可使用回调URL</li>								 								 								 
+							</ul> 
+					</ul>			 					  
+				</section>
+				
+				<section>
+					<h2>AppPackage</h2>			
+					<ul>							
+							<li>可上载 .NET或C++ 程序</li>	
+							<P></P>							
+							<li>CRX 程序</li>				
+							<P></P>														
+							<li>DBX 程序</li>				
+							<P></P>														
+							<li>App 必须打包为<a href="http://download.autodesk.com/media/adn/ADN_DevCast_Episode_6/ADN_DevCast_Episode_6.html">Autoloader</a>格式</li>								 							 
+							<P></P>	 							 
+					</ul>			 					  
+				</section>
+				
+				<section>
+					<h2>外部引用</h2>			
+					<ul>							
+							<li>DWG 文件可以有外部参照 (dwg, 图片等.)</li>	
+							<P></P>							
+							<li>客户端必须提供所有引用</li>				
+							 <ul>
+								<li>网络传输package</li>								 								 
+								<li>输入参数提供内联 ‘File’ 对象 (JSON 字串描述URLs和其本地名)</li>	 
+					</ul>			 					  
+				</section> 
+				
+				
+				
+				<section>
+					<h2>背后发生了什么</h2>			
+					<ul>							
+							<li>Worker通过队列收取 WorkItem</li>	
+							<P></P>							
+							<li>下载输入参数</li>
+							<ul>
+								<li>HTTP GET</li>								
+							</ul>
+							<li>运行AcCoreConsole.exe</li>
+							<P></P>	
+							<li>将结果上载到输出参数指定的存储</li>
+							<ul>
+								<li>HTTP POST/PUT</li>								
+							</ul>							
+							 	 							 
+					</ul>			 					  
+				</section>
+				
+				<section data-transition="slide" data-background="#317f65" data-background-transition="zoom">
+					<h1>演示</h1>   
+				</section> 
+				
+				
+				<section>
+					<section id="fragments">
+						<h2>申请开发key</h2>
+						<p>登陆<a href="http://developer.autodesk.com/">http://developer.autodesk.com/</a> </p>
+						<p class="fragment">1. 创建一个APP</p>
+						<p class="fragment"><img width="300" height="150" data-src="images/createapp.png" alt="Down arrow"></p>								
+						<p><span class="fragment">2. 选择APP服务为AutoCAD I/O</span> </p>
+						<p class="fragment"><img width="300" height="150" data-src="images/chooseservice.png" alt="Down arrow"></p>
+						
+					</section>	
+
+					<section>
+						<p>3. 填写APP的基本信息</p>
+						<ul>							
+							<li>必填APP名</li>	
+							<li>选填描述，回调URL和程序网站</li>								 
+						</ul>		
+						<p class="fragment"><img width="500" height="400" data-src="images/key.png" alt="Down arrow"></p>								  
+					</section>					
+				</section>
+				
+				<section>
+					<h1>参考资料</h1> 
+					<ul>							
+							<li><a href="https://autocad.io">在线帮助</a></li>	
+							<P></P>	
+							<li><a href="http://developer.api.autodesk.com/documentation/v1/acad_io/sampleapp.html">入门教程</a></li>	
+							<P></P>	
+							<li><a href="http://adndevblog.typepad.com/autocad/2015/02/getting-started-with-autocad-io.html">视频教程（英文） - 含本课程中演示的源程序</a></li>	
+							<P></P>	
+							<li><a href="http://makemycloset.azurewebsites.net/">AutoCAD I/O  和 Autodesk Viewer结合的例子</a></li>	
+							<P></P>	
+							<li><a href="http://blog.csdn.net/autodeskinventorapi/article/category/3111215/">中文博客(含AcCoreConsolez)</a></li>	
+							<P></P>	
+							<li><a href="http://forums.autodesk.com/t5/autocad-i-o/bd-p/105">论坛</a></li>	
+							<P></P>	
+
+							 							 
+					</ul>	
+				</section>
+				
+				<section>
+					<h2>Autodesk ADN 微信公众号</h2>
+					 <img width="300" height="300" data-src="images/wechat.jpg" alt="Down arrow">	
+					 <h6>梁晓冬邮箱 <a href="xiaodong.liang@autodesk.com">xiaodong.liang@autodesk.com</a></h6>
+					 <h6>博客 <a href="http://blog.csdn.net/autodeskinventorapi">http://blog.csdn.net/autodeskinventorapi</a></h6>
+					 <p><font size="5">在线PPT网址短连接: http://dwz.cn/I33Vw  注意大小写</font></p>
+					 <p><font size="5">全连接: http://xiaodongliang.github.io/AutoCADIO_Slides_CHS/</font></p>
+				</section> 
+				
+				<section>
+					 <img width="800" height="600" data-src="images/Autodesk.png" alt="Down arrow">	
+				</section>  
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
 </html>
